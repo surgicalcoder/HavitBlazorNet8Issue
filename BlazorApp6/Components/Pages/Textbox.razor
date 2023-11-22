@@ -1,0 +1,33 @@
+﻿@page "/TextBox"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Normal Text</h1>
+
+<EditForm Model="@LoginDetails" method="post" FormName="LoginForm" OnSubmit="@Login" Context="formContext">
+	Username: <InputText @bind-Value="@LoginDetails!.Username" /> <br />
+	Password: <InputText @bind-Value="@LoginDetails!.Password" />
+	<HxSubmit Color="ThemeColor.Primary" Text="Submit" />
+</EditForm>
+
+@code{
+
+	[SupplyParameterFromForm]
+	public InteractiveLoginDetails? LoginDetails { get; set; }
+
+	public class InteractiveLoginDetails
+	{
+		public string Username { get; set; }
+		public string Password { get; set; } 
+	}
+	
+	protected override void OnInitialized()
+	{
+		LoginDetails ??= new InteractiveLoginDetails();
+	}
+
+	private async Task Login()
+	{
+		Console.WriteLine($"Username: {LoginDetails.Username} , Password: {LoginDetails.Password}");
+	}
+}
